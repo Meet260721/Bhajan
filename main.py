@@ -76,27 +76,3 @@ connection.commit()
 curr.close()
 connection.close()
 
-
-#create empty list to store data
-# track_list = []
-
-#run for loop for read data from spotify_json['tracks'] and append in track_list = [] list
-# track = {
-    #     'Playlist Name' : spotify_json['playlist_name'],
-    #     'Description' :spotify_json['description'],
-    #     'User Name':spotify_json['creator']['username'] ,
-    #     "Email":spotify_json['creator']['email'],
-    #     'Track Name': i['track_name'],
-    #     "Artist": i['artist'],
-    #     "Album": i['album'],
-    #     "Album Name": i['album']['name'],
-    #     "Release Date": i['album']['release_date'],
-    #     'Duration(min)': duration_min(i['duration_ms']),
-    #     'Duration(sec)': duration_sec(i['duration_ms']),
-    #     "Popularity": i['popularity'],
-    #     "Genres": i['genres'],
-    #     "Explicit Content": i['explicit_content']
-    # }
-    # track_list.append(track)
-
-
