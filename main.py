@@ -19,7 +19,7 @@ connection = psycopg2.connect(
 curr = connection.cursor()
 # create function for convert duration time from millisecond to minutes
 def duration_min(ms):
-    t  = timedelta(milliseconds= ms)
+    t = timedelta(milliseconds= ms)
     min = int(t.seconds / 60)
     return min
 
