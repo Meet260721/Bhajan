@@ -2,7 +2,7 @@ import json
 from datetime import timedelta
 import psycopg2
 from psycopg2 import sql
-import pandas as pd
+
 
 # read file from Songs.json as file and store data in spotify_json
 with open("Songs.json", 'r') as file:
@@ -29,6 +29,7 @@ def duration_sec(ms):
     sec = int(t.seconds % 60)
     return sec
 
+#Insert values from the  json data to  playlist table  in database
 curr.execute(sql.SQL("""
     INSERT INTO playlist (playlist_name, description, creator_username, creator_email)
     VALUES (%s, %s, %s, %s)"""),
@@ -39,6 +40,7 @@ curr.execute(sql.SQL("""
         spotify_json['creator']['email']
     ))
 
+#Insert values from the  json data to  track table  in database
 for track in spotify_json['tracks']:
     curr.execute(sql.SQL("""
         INSERT INTO track (track_name, artist, album_name, release_date, duration_min, popularity, explicit_content, duration_sec)
