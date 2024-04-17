@@ -32,7 +32,9 @@ def duration_sec(ms):
 #Insert values from the  json data to  playlist table  in database
 curr.execute(sql.SQL("""
     INSERT INTO playlist (playlist_name, description, creator_username, creator_email)
-    VALUES (%s, %s, %s, %s)"""),
+    VALUES (%s, %s, %s, %s)
+    ON CONFLICT (playlist_name, creator_username) DO NOTHING
+    """),
     (
         spotify_json['playlist_name'],
         spotify_json['description'],
@@ -42,20 +44,32 @@ curr.execute(sql.SQL("""
 
 #Insert values from the  json data to  track table  in database
 for track in spotify_json['tracks']:
-    curr.execute(sql.SQL("""
-        INSERT INTO track (track_name, artist, album_name, release_date, duration_min, popularity, explicit_content, duration_sec)
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"""),
-        (
-            track['track_name'],
-            track['artist'],
-            track['album']['name'],
-            track['album']['release_date'],
-            duration_min(track['duration_ms']),
-            track['popularity'],
-            # track['genres'],
-            track['explicit_content'],
-            duration_sec(track['duration_ms'])
-        ))
+    curr.execute(
+        sql.SQL("SELECT playlist_id FROM playlist WHERE playlist_name = %s AND creator_username = %s"),
+        (spotify_json['playlist_name'], spotify_json['creator']['username'])
+    )
+    result = curr.fetchone()
+
+    playlist_id = result[0] if result else None
+
+    if playlist_id is not None:
+        curr.execute(sql.SQL("""
+            INSERT INTO track (track_name,playlist_id, artist, album_name, release_date, duration_min, popularity, explicit_content, duration_sec)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s,%s)
+            ON CONFLICT (track_name, artist) DO NOTHING
+            """),
+            (
+                track['track_name'],
+                playlist_id,
+                track['artist'],
+                track['album']['name'],
+                track['album']['release_date'],
+                duration_min(track['duration_ms']),
+                track['popularity'],
+                # track['genres'],
+                track['explicit_content'],
+                duration_sec(track['duration_ms'])
+            ))
 
 # Extract genre names from the JSON data
 genre_names = []
@@ -69,7 +83,9 @@ genre_names = list(set(genre_names))
 for genre_name in genre_names:
     curr.execute(sql.SQL("""
         INSERT INTO genre (genre_name)
-        VALUES (%s)"""), (genre_name,))
+        VALUES (%s)
+        ON CONFLICT (genre_name) DO NOTHING
+         """), (genre_name,))
 
 
 connection.commit()
