@@ -89,6 +89,40 @@
       "explicit_content": false
    }
   ]
+},
+{
+  "playlist_name": "Prabodham",
+  "description": "He hari.",
+  "creator": {
+  "username": "Meet",
+  "email": "patelmeet@example.com"
+  },
+  "tracks": [
+    {
+    "track_name": "Bolya shree hari",
+      "artist": "Meet Patel",
+      "album": {
+        "name": "Gunatit",
+        "release_date": "2017-11-15"
+      },
+      "duration_ms": 220000,
+      "popularity": 89,
+      "genres": ["Pop"],
+      "explicit_content": true
+   },
+    {
+    "track_name": "Sadhu sadhi",
+      "artist": "Swamiji",
+      "album": {
+        "name": "Prabhuji",
+        "release_date": "2017-11-15"
+      },
+      "duration_ms": 270000,
+      "popularity": 77,
+      "genres": ["Rock"],
+      "explicit_content": false
+   }
+  ]
 }
 ]
 
