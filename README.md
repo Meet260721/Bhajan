@@ -5,3 +5,7 @@ The issue we faced is connect table with each other and also not able to print l
 to solve this issue we make playlist_id a foreign key in track table, so we successfully establish a relation between two tables playlist and track. and fetch the playlist_id from playlist table and print in track table.
 When we closely monitor the data in table we saw that everytime we run the code it rewrite the data in tables means duplicate datas, so to solve this first we use turncate in sql to remove data and then we use constrain and conflict in our code to stop rewrite duplicate data and we successfully solve this issue.
 We created unittest cases for function in unit.py file.
+We add more data in json file.
+then create for loop for playlist.
+We removed 2 column(duration_min & duration_sec) in track table and create one new column duration_time, and print value for duration time.
+create one new table track_genres for relationship between track and genres. add two column track_id abd genres_id and successfully print value inside table.
