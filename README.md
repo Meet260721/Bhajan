@@ -8,4 +8,6 @@ We created unittest cases for function in unit.py file.
 We add more data in json file.
 then create for loop for playlist.
 We removed 2 column(duration_min & duration_sec) in track table and create one new column duration_time, and print value for duration time.
-create one new table track_genres for relationship between track and genres. add two column track_id abd genres_id and successfully print value inside table.
+create one new table track_genres for relationship between track and genres. add two column track_id and genres_id and successfully print value inside table.
+Create album table and successfully insert all values in album table.
+Then we add try except blocks for exception handling.
