@@ -60,7 +60,8 @@ for playlist_data in spotify_json:
         except psycopg2.Error as e:
             print("Error occur while inserting in playlist table", e)
     else:
-        print('Email is not valid please check your data')
+
+        print('Email is not valid please check your data',email)
     time.sleep(1)
 #
 #     #Insert values from the  json data to  track table  in database
