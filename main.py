@@ -61,7 +61,7 @@ for playlist_data in spotify_json:
             print("Error occur while inserting in playlist table", e)
     else:
 
-        print('Email is not valid please check your data',email)
+        print('Email is not valid please check your email data. ',email)
     time.sleep(1)
 #
 #     #Insert values from the  json data to  track table  in database
