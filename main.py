@@ -75,11 +75,11 @@ for playlist_data in spotify_json:
                     if dateObject.date() <= date.today():
                         return True
                     else:
-                        print(f"Date cann't be in the future {input_date}, enter past or present date.")
                         # raise ValueError("Date cannot be in the future")
+                        print(f"Date cann't be in the future {input_date}, enter past or present date.")
                 except ValueError:
+                    # raise ValueError("Incorrect date formate for , it should be YYYY-MM-DD")
                     print(f"Incorrect date formate for {input_date}, it should be YYYY-MM-DD")
-                    #raise ValueError("Incorrect date formate for , it should be YYYY-MM-DD")
 
             # function for validating popularity
             def is_valid_popularity(input_popularity):
