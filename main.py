@@ -1,6 +1,6 @@
 import json
 import time
-from datetime import timedelta
+from datetime import timedelta,datetime,date
 import psycopg2
 from psycopg2 import sql
 from email_validator import validate_email, EmailNotValidError
@@ -44,6 +44,7 @@ for playlist_data in spotify_json:
         except EmailNotValidError:
             return False
 
+
     if is_valid(email):
         try:
             curr.execute(sql.SQL("""
@@ -63,64 +64,79 @@ for playlist_data in spotify_json:
         #Insert values from the  json data to  track table  in database
         for track in playlist_data['tracks']:
             genres_str = ','.join(track['genres'])
-            try:
-                curr.execute(
-                    sql.SQL("SELECT playlist_id FROM playlist WHERE playlist_name = %s AND creator_username = %s"),
-                    (playlist_data['playlist_name'], playlist_data['creator']['username'])
-                )
-                result = curr.fetchone()
-                playlist_id = result[0] if result else None
+            input_date = track['album']['release_date']
+            # Validating the value of release_date
+            def valid_date(input_date):
+                try:
+                    dateObject = datetime.strptime(input_date, "%Y-%m-%d")
+                    if dateObject.date() <= date.today():
+                        return True
+                    else:
+                        print(f"Date cann't be in the future {input_date}, enter past or present date.")
+                        # raise ValueError("Date cannot be in the future")
+                except ValueError:
+                    print(f"Incorrect date formate for {input_date}, it should be YYYY-MM-DD")
+                    #raise ValueError("Incorrect date formate for , it should be YYYY-MM-DD")
 
-                if playlist_id is not None:
-                    # Insert album data into the album table
-                    curr.execute(sql.SQL("""
-                               INSERT INTO album (name, release_date)
-                               VALUES (%s, %s)
-                               ON CONFLICT DO NOTHING
-                           """), (
-                        track['album']['name'],
-                        track['album']['release_date']
-                    ))
-                    # Get the album_id
-                    curr.execute(sql.SQL("""
-                               SELECT album_id FROM album
-                               WHERE name = %s AND release_date = %s
-                           """), (
-                        track['album']['name'],
-                        track['album']['release_date']
-                    ))
-                    album_id = curr.fetchone()[0]
+            if valid_date(input_date):
+                try:
+                    curr.execute(
+                        sql.SQL("SELECT playlist_id FROM playlist WHERE playlist_name = %s AND creator_username = %s"),
+                        (playlist_data['playlist_name'], playlist_data['creator']['username'])
+                    )
+                    result = curr.fetchone()
+                    playlist_id = result[0] if result else None
 
-                    #insert value into track table
-                    curr.execute(sql.SQL("""
-                        INSERT INTO track (track_name,playlist_id, artist, album_name, release_date, duration_time, popularity, genres, explicit_content, album_id)
-                        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-                        ON CONFLICT (track_name, artist) DO NOTHING
-
-                        """),
-                        (
-                            track['track_name'],
-                            playlist_id,
-                            track['artist'],
+                    if playlist_id is not None:
+                        # Insert album data into the album table
+                        curr.execute(sql.SQL("""
+                                   INSERT INTO album (name, release_date)
+                                   VALUES (%s, %s)
+                                   ON CONFLICT DO NOTHING
+                               """), (
                             track['album']['name'],
-                            track['album']['release_date'],
-                            duration_time(track['duration_ms']),
-                            track['popularity'],
-                            genres_str,
-                            track['explicit_content'],
-                            album_id
+                            track['album']['release_date']
                         ))
-                    # track_id retrieve
-                    curr.execute(sql.SQL("""
-                                SELECT track_id FROM track
-                                WHERE track_name = %s AND artist = %s
-                            """), (
-                        track['track_name'],
-                        track['artist']
-                    ))
-                    track_id = curr.fetchone()[0]
-            except psycopg2.Error as e:
-                print("Error occur while inserting data in track table", e)
+                        # Get the album_id
+                        curr.execute(sql.SQL("""
+                                   SELECT album_id FROM album
+                                   WHERE name = %s AND release_date = %s
+                               """), (
+                            track['album']['name'],
+                            track['album']['release_date']
+                        ))
+                        album_id = curr.fetchone()[0]
+
+                        #insert value into track table
+                        curr.execute(sql.SQL("""
+                            INSERT INTO track (track_name,playlist_id, artist, album_name, release_date, duration_time, popularity, genres, explicit_content, album_id)
+                            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                            ON CONFLICT (track_name, artist) DO NOTHING
+    
+                            """),
+                            (
+                                track['track_name'],
+                                playlist_id,
+                                track['artist'],
+                                track['album']['name'],
+                                track['album']['release_date'],
+                                duration_time(track['duration_ms']),
+                                track['popularity'],
+                                genres_str,
+                                track['explicit_content'],
+                                album_id
+                            ))
+                        # track_id retrieve
+                        curr.execute(sql.SQL("""
+                                    SELECT track_id FROM track
+                                    WHERE track_name = %s AND artist = %s
+                                """), (
+                            track['track_name'],
+                            track['artist']
+                        ))
+                        track_id = curr.fetchone()[0]
+                except psycopg2.Error as e:
+                    print("Error occur while inserting data in track table", e)
 
         # Extract genre names from the JSON data
         for track in playlist_data['tracks']:
