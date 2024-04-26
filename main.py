@@ -27,7 +27,7 @@ def duration_time(ms):
     t = timedelta(milliseconds= ms)
     min = int(t.seconds / 60)
     sec = int(t.seconds % 60)
-    return f"{min}.{sec:02d}"
+    return f"{min}:{sec:02d}"
 
 #creating empty list
 genre_names = []
@@ -65,8 +65,11 @@ for playlist_data in spotify_json:
         for track in playlist_data['tracks']:
             genres_str = ','.join(track['genres'])
             input_date = track['album']['release_date']
-            # Validating the value of release_date
-            def valid_date(input_date):
+            input_popularity = track['popularity']
+            input_durationtime = track['duration_ms']
+
+            # function for validating release_date
+            def is_valid_date(input_date):
                 try:
                     dateObject = datetime.strptime(input_date, "%Y-%m-%d")
                     if dateObject.date() <= date.today():
@@ -78,66 +81,110 @@ for playlist_data in spotify_json:
                     print(f"Incorrect date formate for {input_date}, it should be YYYY-MM-DD")
                     #raise ValueError("Incorrect date formate for , it should be YYYY-MM-DD")
 
-            if valid_date(input_date):
+            # function for validating popularity
+            def is_valid_popularity(input_popularity):
                 try:
-                    curr.execute(
-                        sql.SQL("SELECT playlist_id FROM playlist WHERE playlist_name = %s AND creator_username = %s"),
-                        (playlist_data['playlist_name'], playlist_data['creator']['username'])
-                    )
-                    result = curr.fetchone()
-                    playlist_id = result[0] if result else None
+                    # check if popularity is intger or not
+                    if input_popularity == int(input_popularity):
+                        # Check if popularity is in between 0 - 100
+                        if 0<= input_popularity <=100:
+                            return True
+                        else:
+                            print(f"Popularity {input_popularity} must be in between 0 to 100.")
+                            return False
+                    else:
+                        print(f"Popularity {input_popularity} must be in integer.")
+                        return False
+                except ValueError:
+                    print(f"Popularity {input_popularity} must be in integer and must be in between 0 to 100. .")
+                    return False
 
-                    if playlist_id is not None:
-                        # Insert album data into the album table
-                        curr.execute(sql.SQL("""
-                                   INSERT INTO album (name, release_date)
-                                   VALUES (%s, %s)
-                                   ON CONFLICT DO NOTHING
-                               """), (
-                            track['album']['name'],
-                            track['album']['release_date']
-                        ))
-                        # Get the album_id
-                        curr.execute(sql.SQL("""
-                                   SELECT album_id FROM album
-                                   WHERE name = %s AND release_date = %s
-                               """), (
-                            track['album']['name'],
-                            track['album']['release_date']
-                        ))
-                        album_id = curr.fetchone()[0]
+            # function for validating duration_time
+            def is_valid_durationtime(input_durationtime):
+                try:
+                    #check if duration time is intger or not
+                    if input_durationtime == int(input_durationtime):
+                    # Check if duration is greater than or equal to 100000
+                        if input_durationtime >= 100000:
+                            return True
+                        else:
+                            print(f"Duration time {input_durationtime} must be >= 100000")
+                            return False
+                    else:
+                        print(f"Duration time {input_durationtime} must be an integer.")
+                        return False
+                except ValueError:
+                    print(f"Duration time {input_durationtime} must be an integer and >=100000.")
+                    return False
 
-                        #insert value into track table
-                        curr.execute(sql.SQL("""
-                            INSERT INTO track (track_name,playlist_id, artist, album_name, release_date, duration_time, popularity, genres, explicit_content, album_id)
-                            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-                            ON CONFLICT (track_name, artist) DO NOTHING
-    
-                            """),
-                            (
-                                track['track_name'],
-                                playlist_id,
-                                track['artist'],
-                                track['album']['name'],
-                                track['album']['release_date'],
-                                duration_time(track['duration_ms']),
-                                track['popularity'],
-                                genres_str,
-                                track['explicit_content'],
-                                album_id
-                            ))
-                        # track_id retrieve
-                        curr.execute(sql.SQL("""
-                                    SELECT track_id FROM track
-                                    WHERE track_name = %s AND artist = %s
-                                """), (
-                            track['track_name'],
-                            track['artist']
-                        ))
-                        track_id = curr.fetchone()[0]
-                except psycopg2.Error as e:
-                    print("Error occur while inserting data in track table", e)
+            # only inserting value if is_validate_date,is_valid_durationtime and is_valid_popularity is true
+            if is_valid_date(input_date):
+                if is_valid_durationtime(input_durationtime):
+                    if is_valid_popularity(input_popularity):
+                        try:
+                            curr.execute(
+                                sql.SQL("SELECT playlist_id FROM playlist WHERE playlist_name = %s AND creator_username = %s"),
+                                (playlist_data['playlist_name'], playlist_data['creator']['username'])
+                            )
+                            result = curr.fetchone()
+                            playlist_id = result[0] if result else None
 
+                            if playlist_id is not None:
+                                # Insert album data into the album table
+                                curr.execute(sql.SQL("""
+                                           INSERT INTO album (name, release_date)
+                                           VALUES (%s, %s)
+                                           ON CONFLICT DO NOTHING
+                                       """), (
+                                    track['album']['name'],
+                                    track['album']['release_date']
+                                ))
+                                # Get the album_id
+                                curr.execute(sql.SQL("""
+                                           SELECT album_id FROM album
+                                           WHERE name = %s AND release_date = %s
+                                       """), (
+                                    track['album']['name'],
+                                    track['album']['release_date']
+                                ))
+                                album_id = curr.fetchone()[0]
+
+                                #insert value into track table
+                                curr.execute(sql.SQL("""
+                                    INSERT INTO track (track_name,playlist_id, artist, album_name, release_date, duration_time, popularity, genres, explicit_content, album_id)
+                                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                                    ON CONFLICT (track_name, artist) DO NOTHING
+            
+                                    """),
+                                    (
+                                        track['track_name'],
+                                        playlist_id,
+                                        track['artist'],
+                                        track['album']['name'],
+                                        track['album']['release_date'],
+                                        duration_time(track['duration_ms']),
+                                        track['popularity'],
+                                        genres_str,
+                                        track['explicit_content'],
+                                        album_id
+                                    ))
+                                # track_id retrieve
+                                curr.execute(sql.SQL("""
+                                            SELECT track_id FROM track
+                                            WHERE track_name = %s AND artist = %s
+                                        """), (
+                                    track['track_name'],
+                                    track['artist']
+                                ))
+                                track_id = curr.fetchone()[0]
+                        except psycopg2.Error as e:
+                            print("Error occur while inserting data in track table", e)
+                    else:
+                        print("Check popularity for ",track['popularity'])
+                else:
+                    print("Check release_date time for ", track['album']['release_date'])
+            else:
+                print("Check  for ", track['popularity'])
         # Extract genre names from the JSON data
         for track in playlist_data['tracks']:
             genre_names.extend(track['genres'])
