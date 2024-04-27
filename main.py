@@ -40,8 +40,8 @@ for playlist_data in spotify_json:
     email = playlist_data['creator']['email']
 
     # create function to validate the value(must be alphabet and space)
-    def is_valid_alpha(input_dec):
-        input_dec = input_description.replace('.', '')
+    def is_valid_alpha(input_data):
+        input_dec = input_data.replace('.', '')
         # Check if description contains only alphabets and spaces
         if input_dec.replace(' ', '').isalpha():
             return True
@@ -60,9 +60,14 @@ for playlist_data in spotify_json:
 
     # Validating the value of paylist username
     def is_valid_username(input_data):
+        input_under = input_data.replace('_', '')
         # Check if username contains only alphabets, numbers, and underscores
-        if input_data.isalnum() or '_' in input_data:
-            return True
+        if input_under.isalnum():
+            if len(input_under) >= 6:
+                return True
+            else:
+                print(f"Length of Username {input_data} must be 6 including alphabet and digit.")
+                return False
         else:
             print(f"Username {input_data} must contain only alphabets, numbers, or underscores.")
             return False
@@ -114,9 +119,11 @@ for playlist_data in spotify_json:
                                 else:
                                     # raise ValueError("Date cannot be in the future")
                                     print(f"Date cann't be in the future {input_date}, enter past or present date.")
+                                    return False
                             except ValueError:
                                 # raise ValueError("Incorrect date formate for , it should be YYYY-MM-DD")
                                 print(f"Incorrect date formate for {input_date}, it should be YYYY-MM-DD")
+                                return False
 
                         # function for validating popularity
                         def is_valid_popularity(input_popularity):
