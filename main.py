@@ -39,26 +39,32 @@ for playlist_data in spotify_json:
     input_username = playlist_data['creator']['username']
     email = playlist_data['creator']['email']
 
-
-    # print(email)
-
-    # create function to validate the value(must be alphabet and space) for playlist_name,description, track_name, artist, album name
-    def is_valid_details(input_data):
+    # create function to validate the value(must be alphabet and space)
+    def is_valid_alpha(input_dec):
+        input_dec = input_description.replace('.', '')
         # Check if description contains only alphabets and spaces
-        if input_data.replace(' ', '').isalpha():
+        if input_dec.replace(' ', '').isalpha():
             return True
         else:
-            print(f"{input_data} must contain only alphabets and spaces.")
+            print(f"{input_dec} must contain only alphabets and spaces.")
             return False
 
-
-    # Validating the value of paylist username
-    def is_valid_username(input_username):
-        # Check if username contains only alphabets, numbers, and underscores
-        if input_username.isalnum() or '_' in input_username:
+    # create function to validate the value(must be alphabet, space and punctuation)
+    def is_valid_special_character(input_data):
+        # Check if description contains only alphabets,special character(punctuation) and spaces
+        if input_data.isascii() :
             return True
         else:
-            print(f"Username {input_username} must contain only alphabets, numbers, or underscores.")
+            print(f"{input_data} must contain alphabets,punctuation and spaces.")
+            return False
+
+    # Validating the value of paylist username
+    def is_valid_username(input_data):
+        # Check if username contains only alphabets, numbers, and underscores
+        if input_data.isalnum() or '_' in input_data:
+            return True
+        else:
+            print(f"Username {input_data} must contain only alphabets, numbers, or underscores.")
             return False
 
     # Validating the value of paylist description
@@ -71,8 +77,8 @@ for playlist_data in spotify_json:
             return False
 
     #inserting value in table if and only email  is valid
-    if is_valid_details(input_playlist_name):
-        if is_valid_details(input_description):
+    if is_valid_alpha(input_playlist_name):
+        if is_valid_alpha(input_description):
             if is_valid_username(input_username):
                 if is_valid(email):
                     try:
@@ -150,9 +156,9 @@ for playlist_data in spotify_json:
                                 return False
 
                         # only inserting value if is_validate_date,is_valid_durationtime and is_valid_popularity is true
-                        if is_valid_details(input_trackName):
-                            if is_valid_details(input_artist):
-                                if is_valid_details(input_albumName):
+                        if is_valid_special_character(input_trackName):
+                            if is_valid_alpha(input_artist):
+                                if is_valid_special_character(input_albumName):
                                     if is_valid_date(input_date):
                                         if is_valid_durationtime(input_durationtime):
                                             if is_valid_popularity(input_popularity):
