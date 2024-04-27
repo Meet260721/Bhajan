@@ -44,6 +44,11 @@ for playlist_data in spotify_json:
         input_dec = input_data.replace('.', '')
         # Check if description contains only alphabets and spaces
         if input_dec.replace(' ', '').isalpha():
+            if len(input_dec) >= 6:
+                return True
+            else:
+                print(f"Length of  {input_data} must be >=6.")
+                return False
             return True
         else:
             print(f"{input_dec} must contain only alphabets and spaces.")
@@ -52,8 +57,12 @@ for playlist_data in spotify_json:
     # create function to validate the value(must be alphabet, space and punctuation)
     def is_valid_special_character(input_data):
         # Check if description contains only alphabets,special character(punctuation) and spaces
-        if input_data.isascii() :
-            return True
+        if input_data.isascii():
+            if len(input_data) >= 6:
+                return True
+            else:
+                print(f"Length of  {input_data} must be >=6.")
+                return False
         else:
             print(f"{input_data} must contain alphabets,punctuation and spaces.")
             return False
@@ -66,7 +75,7 @@ for playlist_data in spotify_json:
             if len(input_under) >= 6:
                 return True
             else:
-                print(f"Length of Username {input_data} must be 6 including alphabet and digit.")
+                print(f"Length of Username {input_data} must be >=6.")
                 return False
         else:
             print(f"Username {input_data} must contain only alphabets, numbers, or underscores.")
