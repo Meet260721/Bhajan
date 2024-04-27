@@ -68,7 +68,6 @@ for playlist_data in spotify_json:
             return False
 
     # Validating the value of paylist description
-
     def is_valid(email):
         try:
             validate_email(email)
@@ -258,7 +257,6 @@ for playlist_data in spotify_json:
                             ))
                         except psycopg2.Error as e:
                             print("Error occur while inserting data in genres table", e)
-
                 else:
                     print('Email is not valid please check your email data. ',email)
             else:
