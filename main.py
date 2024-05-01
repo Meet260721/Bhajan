@@ -33,6 +33,7 @@ def duration_time(ms):
 #creating empty list
 genre_names = []
 
+# Validate playlist details
 def is_valid_playlist(playlist_data):
     input_playlist_name = playlist_data['playlist_name']
     input_description = playlist_data['description']
@@ -58,6 +59,7 @@ def is_valid_track(track):
                 is_valid_durationtime(input_durationtime),
                 is_valid_popularity(input_popularity)])
 
+# Validate all json details
 def is_valid_json(spotify_json):
     for playlist_data in spotify_json:
         if is_valid_playlist(playlist_data):
@@ -80,11 +82,11 @@ def is_valid_date(input_date):
             return True
         else:
             # raise ValueError("Date cannot be in the future")
-            print(f"Date cann't be in the future {input_date}, enter past or present date.")
+            print(f"Date cann't be in the future ' {input_date} ', enter past or present date.")
             return False
     except ValueError:
         # raise ValueError("Incorrect date formate for , it should be YYYY-MM-DD")
-        print(f"Incorrect date formate for {input_date}, it should be YYYY-MM-DD")
+        print(f"Incorrect date formate for ' {input_date} ', it should be YYYY-MM-DD")
         return False
 
 # function for validating popularity
@@ -96,13 +98,13 @@ def is_valid_popularity(input_popularity):
             if 0 <= input_popularity <= 100:
                 return True
             else:
-                print(f"Popularity {input_popularity} must be in between 0 to 100.")
+                print(f"Popularity ' {input_popularity} ' must be in between 0 to 100.")
                 return False
         else:
-            print(f"Popularity {input_popularity} must be in integer.")
+            print(f"Popularity ' {input_popularity} ' must be in integer.")
             return False
     except ValueError:
-        print(f"Popularity {input_popularity} must be in integer and must be in between 0 to 100. .")
+        print(f"Popularity ' {input_popularity} ' must be in integer and must be in between 0 to 100. .")
         return False
 
 
@@ -115,13 +117,13 @@ def is_valid_durationtime(input_durationtime):
             if input_durationtime >= 100000:
                 return True
             else:
-                print(f"Duration time {input_durationtime} must be >= 100000")
+                print(f"Duration time ' {input_durationtime} ' must be >= 100000")
                 return False
         else:
-            print(f"Duration time {input_durationtime} must be an integer.")
+            print(f"Duration time ' {input_durationtime} ' must be an integer.")
             return False
     except ValueError:
-        print(f"Duration time {input_durationtime} must be an integer and >=100000.")
+        print(f"Duration time ' {input_durationtime} ' must be an integer and >=100000.")
         return False
 
 # create function to validate the value(must be alphabet and space)
@@ -151,7 +153,7 @@ def is_valid_special_character(input_data):
         print(f" ' {input_data} ' must contain alphabets,punctuation and spaces.")
         return False
 
-# Validating the value of paylist username
+# Validating the value of playlist username
 def is_valid_username(input_data):
     input_under = input_data.replace('_', '')
     # Check if username contains only alphabets, numbers, and underscores
