@@ -5,16 +5,6 @@ import psycopg2
 from psycopg2 import sql
 from email_validator import validate_email, EmailNotValidError
 
- #Connection to database
-connection = psycopg2.connect(
-    dbname="Demo",
-    user="postgres",
-    password="Meet@2712",
-    host="localhost",
-    port="5432"
-)
-curr = connection.cursor()
-
 try:
     # read file from Songs.json as file and store data in spotify_json
     with open("Songs.json", 'r') as file:
@@ -56,8 +46,8 @@ def is_valid_track(track):
                 is_valid_alpha(input_artist),
                 is_valid_special_character(input_albumName),
                 is_valid_date(input_date),
-                is_valid_durationtime(input_durationtime),
-                is_valid_popularity(input_popularity)])
+                is_valid_integer(input_durationtime),
+                is_valid_integer(input_popularity)])
 
 # Validate all json details
 def is_valid_json(spotify_json):
@@ -87,43 +77,6 @@ def is_valid_date(input_date):
     except ValueError:
         # raise ValueError("Incorrect date formate for , it should be YYYY-MM-DD")
         print(f"Incorrect date formate for ' {input_date} ', it should be YYYY-MM-DD")
-        return False
-
-# function for validating popularity
-def is_valid_popularity(input_popularity):
-    try:
-        # check if popularity is intger or not
-        if input_popularity == int(input_popularity):
-            # Check if popularity is in between 0 - 100
-            if 0 <= input_popularity <= 100:
-                return True
-            else:
-                print(f"Popularity ' {input_popularity} ' must be in between 0 to 100.")
-                return False
-        else:
-            print(f"Popularity ' {input_popularity} ' must be in integer.")
-            return False
-    except ValueError:
-        print(f"Popularity ' {input_popularity} ' must be in integer and must be in between 0 to 100. .")
-        return False
-
-
-# function for validating duration_time
-def is_valid_durationtime(input_durationtime):
-    try:
-        # check if duration time is intger or not
-        if input_durationtime == int(input_durationtime):
-            # Check if duration is greater than or equal to 100000
-            if input_durationtime >= 100000:
-                return True
-            else:
-                print(f"Duration time ' {input_durationtime} ' must be >= 100000")
-                return False
-        else:
-            print(f"Duration time ' {input_durationtime} ' must be an integer.")
-            return False
-    except ValueError:
-        print(f"Duration time ' {input_durationtime} ' must be an integer and >=100000.")
         return False
 
 # create function to validate the value(must be alphabet and space)
@@ -174,6 +127,24 @@ def is_valid(email):
         return True
     except EmailNotValidError:
         return False
+
+#CHECK IF INPUT_DATA IS INTEGER OR NOT
+def is_valid_integer(input_data):
+    if isinstance(input_data, int):
+        return True
+    else:
+        print(f"'{input_data}' is not an integer")
+        return False
+
+ #Connection to database
+connection = psycopg2.connect(
+    dbname="Demo",
+    user="postgres",
+    password="Meet@2712",
+    host="localhost",
+    port="5432"
+)
+curr = connection.cursor()
 
  # inserting value in table if and only all details are true
 if is_valid_json(spotify_json):
@@ -285,6 +256,7 @@ if is_valid_json(spotify_json):
 else:
     print("validation failed.")
 
+#PAUSE BEFORE READING AND INSERTING NEXT DATA
 time.sleep(1)
 
 connection.commit()
