@@ -110,7 +110,7 @@ def is_valid_json(spotify_json):
         if is_valid_playlist(playlist_data):
             for track in playlist_data['tracks']:
                 if is_valid_track(track):
-                    pass
+                    return True
                 else:
                     print("Validation failed for track details.")
                     return False
