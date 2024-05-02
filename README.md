@@ -17,3 +17,9 @@ We add code for the integer value validation for the duration_ms and popularity.
 Then we write code for the alphabet validation for playlist_name, description and artist. The issue we got is space and "." in string, so we replace the space and "." with ""(no space, no ".") and  cheked alphabet validation. the length of string must be >=6. we used isalpha() module for the validation.
 we also cheked alphabet and numeric validate for username. the length of string must be >=6. in this validation we allow alphabet, numeric and '_' in username. we used isalnum() module for the validation.
 punctuation validation for track_name,album_name. the length of string must be >=6. in this validation we allow some special (punctuation) like '(', ')', '.' and etc.we used isascii() module for the validation.
+Moved validation methods to a separate file named validation.py.
+Moved database connection logic to a separate file named db_connection.py.
+Moved all PostgreSQL queries to a separate file named sqlStatements.py.
+Previously, we were directly creating tables in the database using SQL queries executed within our Python script.
+Now, we've shifted to creating tables programmatically within Python code using PyCharm.
+This approach allows for better separation of concerns and makes it easier to manage database schema changes.
