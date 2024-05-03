@@ -29,7 +29,6 @@ genre_names = []
  # inserting value in table if and only all details are true
 if validation.is_valid_json(spotify_json):
     # Connection to database
-
     connection, curr = database_connection()
 
     # Create table playlist if it doesn't exist in database
@@ -61,6 +60,7 @@ if validation.is_valid_json(spotify_json):
             print("Error occur while inserting in playlist table", e)
 
         for track in playlist_data['tracks']:
+            # Create new string to store genres data as string
             genres_str = ','.join(track['genres'])
             try:
                 #retrieve playlist_id
@@ -135,5 +135,4 @@ connection.commit()
 
 # Close the cursor and connection
 curr.close()
-
 connection.close()
