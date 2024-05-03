@@ -68,7 +68,6 @@ album_insert_query = """
                     """
 
 # Query for retrieve album_id
-
 album_id_retrieve_query = """
                            SELECT album_id FROM album
                            WHERE name = %s AND release_date = %s
@@ -82,7 +81,6 @@ track_insert_query = """
                         """
 
 # Query for retrieve track_id
-
 track_id_retrieve_qurey = """
                             SELECT track_id FROM tracks
                             WHERE track_name = %s AND artist = %s
@@ -96,7 +94,6 @@ genres_insert_query = """
                      """
 
 # Query for retrieve genres_id
-
 track_genres_insert_query = """
                             INSERT INTO track_genres (track_id, genre_id)
                             SELECT %s, genre_id FROM genres
