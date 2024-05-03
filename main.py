@@ -60,7 +60,7 @@ if validation.is_valid_json(spotify_json):
             print("Error occur while inserting in playlist table", e)
 
         for track in playlist_data['tracks']:
-            # Create new string to store genres data as string
+            # Create new variable to store genres data as single string
             genres_str = ','.join(track['genres'])
             try:
                 #retrieve playlist_id
