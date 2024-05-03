@@ -78,7 +78,7 @@
   "tracks": [
     {
     "track_name": "Podhaniya",
-      "artist": "Chirag Ahir",
+      "artist": "unknown",
       "album": {
         "name": "I am Akshar",
         "release_date": "2017-11-20"
@@ -95,12 +95,12 @@
   "description": "He hari.",
   "creator": {
   "username": "123ABC",
-  "email": "meet@gmail.com"
+  "email": "swamiji@gmail.com"
   },
   "tracks": [
     {
     "track_name": "Bolya shree hari",
-      "artist": "Meet Patel",
+      "artist": "Somewhere on earth",
       "album": {
         "name": "Gunatit",
         "release_date": "2013-12-25"

@@ -1,5 +1,4 @@
 """This file for all validation"""
-
 from datetime import datetime, date
 from email_validator import validate_email,EmailNotValidError
 
