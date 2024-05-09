@@ -60,3 +60,13 @@ Moved database connection logic to a separate file named db_connection.py.
 Shifted PostgreSQL queries to a separate file named sqlStatements.py for better management of database schema changes.
 
 Started creating tables programmatically within Python code using PyCharm for better separation of concerns.
+
+## Steps to Run
+
+Create database in PostgreSQL with help of pgAdmin.
+
+In db_connection.py update the "Database Name", "User Name", "Password", "Host Name", "Port number" according to your database details.
+
+Make sure that Songs.json file located in same folder where is main.py . 
+
+run the "main.py" with "python main.py" or "python3 main.py"
