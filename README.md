@@ -5,17 +5,22 @@ Our project endeavors to develop a comprehensive and efficient database manageme
 
 ## Database Setup:
 
-Created database and tables in PostgreSQL using pgAdmin.
+Created database in PostgreSQL using pgAdmin.
 
 Imported psycopg2 package in Python to establish connection with the database.
 
-Connected to the database and inserted values into tables using Python.
+Connected to the database then create tables and inserted values into tables using Python.
 
 ## Establishing Relationships:
 
-Made playlist_id a foreign key in the track table to establish a relationship between playlist and track tables.
+Made playlist_id,album_id a foreign key in the track table to establish a relationship between playlist table and track table, album table and track tables.
 
-Successfully fetched playlist_id from the playlist table and displayed it in the track table.
+Made track_id,genre_is a foreign key in the track_genres table to establish a relationship between track_genres table and track table, genres table and track_genres tables.
+
+Successfully fetched playlist_id, album_id from the playlist table, album table and displayed it in the track table. Also fetched genre_id, track_id from the genres table, tracks table and displayed it in the track_genres table.
+
+![ER Diagram for tables]([ER Diagram.jpg](https://github.com/Meet260721/Songs/blob/main/ER%20Diagram.jpg))
+
 
 ## Preventing Data Duplication:
 
@@ -65,8 +70,31 @@ Started creating tables programmatically within Python code using PyCharm for be
 
 Create database in PostgreSQL with help of pgAdmin.
 
-In db_connection.py update the "Database Name", "User Name", "Password", "Host Name", "Port number" according to your database details.
+In db_connection.py update the 
+
+        dbname="DatabaseName",  # Insertyourdatabasename
+        
+        user="UserName",  # Insertyourusername
+        
+        password="Password",  # InsertYourpassword
+        
+        host="HostName",  # InsertYourHostName
+        
+        port="Portnumber"  # InsertYourportnumber
+
+according to your database details.
 
 Make sure that Songs.json file located in same folder where is main.py . 
 
-run the "main.py" with "python main.py" or "python3 main.py"
+Set up an S3 bucket in AWS and upload the `Songs.json` file to the bucket.
+
+Configure the AWS credentials in your environment or directly in the code using AWS CLI or SDK.
+
+Install AWSCLI :- 
+pip install awscli
+
+Check Version :- 
+aws --version
+
+Run the `main.py` script by executing `python main.py` or `python3 main.py` in your terminal.
+
