@@ -19,7 +19,7 @@ Made track_id,genre_is a foreign key in the track_genres table to establish a re
 
 Successfully fetched playlist_id, album_id from the playlist table, album table and displayed it in the track table. Also fetched genre_id, track_id from the genres table, tracks table and displayed it in the track_genres table.
 
-
+![ER Diagram for tables]([ER Diagram.jpg](https://github.com/Meet260721/Songs/blob/main/ER%20Diagram.jpg))
 
 
 ## Preventing Data Duplication:
