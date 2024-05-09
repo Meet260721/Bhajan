@@ -1,4 +1,5 @@
 import json
+import boto3
 import time
 from datetime import timedelta,datetime,date
 import psycopg2
@@ -7,11 +8,17 @@ import validation
 from db_connection import database_connection
 import sqlStatements
 
-
 try:
-    # read file from Songs.json as file and store data in spotify_json
-    with open("Songs.json", 'r') as file:
-        spotify_json = json.load(file)
+    # read file Songs.json from the AWS s3 bucket as file and loads data in spotify_json
+    # insert your AWS Access credential
+    s3 = boto3.client('s3',aws_access_key_id = "YOUR AWS ACCESS KEY",aws_secret_access_key = "YOUR AWS SECRET ACCESS KEY")
+
+    bucket_name = "YOUR BUCKET NAME" # Insert your bucket name
+    file_name = "YOUR JSON FILE NAME"# MINE WAS Songs.json
+
+    response = s3.get_object(Bucket=bucket_name, Key=file_name)
+    file = response['Body'].read()
+    spotify_json = json.loads(file)
 except FileNotFoundError:
     print("file Songs.json is not found.")
     exit()

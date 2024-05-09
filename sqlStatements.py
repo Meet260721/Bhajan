@@ -29,7 +29,9 @@ tracks_create_table_query = """
                                 popularity INTEGER,
                                 genres VARCHAR(255), 
                                 explicit_content BOOLEAN,
-                                CONSTRAINT tracks_unique_constraint UNIQUE (track_name, artist))
+                                CONSTRAINT tracks_unique_constraint UNIQUE (track_name, artist),
+                                FOREIGN KEY (playlist_id) REFERENCES playlist(playlist_id),
+                                FOREIGN KEY (album_id) REFERENCES album(album_id))
 """
 
 # Query for create genres table
@@ -44,7 +46,9 @@ track_genres_create_table_query = """
                             CREATE TABLE IF NOT EXISTS track_genres (track_id INTEGER,
                                 genre_id INTEGER ,
                                 PRIMARY KEY(track_id, genre_id),
-                                CONSTRAINT track_genres_unique_constraint UNIQUE (track_id, genre_id))
+                                CONSTRAINT track_genres_unique_constraint UNIQUE (track_id, genre_id),
+                                FOREIGN KEY (track_id) REFERENCES tracks(track_id),
+                                FOREIGN KEY (genre_id) REFERENCES genres(genre_id))
 """
 
 # Query for insert value in playlist table
