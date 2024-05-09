@@ -1,4 +1,4 @@
-# Database Setup:
+## Database Setup:
 
 Created database and tables in PostgreSQL using pgAdmin.
 
@@ -6,23 +6,23 @@ Imported psycopg2 package in Python to establish connection with the database.
 
 Connected to the database and inserted values into tables using Python.
 
-# Establishing Relationships:
+## Establishing Relationships:
 
 Made playlist_id a foreign key in the track table to establish a relationship between playlist and track tables.
 
 Successfully fetched playlist_id from the playlist table and displayed it in the track table.
 
-# Preventing Data Duplication:
+## Preventing Data Duplication:
 
 Implemented constraints and conflict resolution in the code to prevent rewriting duplicate data.
 
 Used SQL's truncate command to remove existing data before inserting new data.
 
-# Unit Testing:
+## Unit Testing:
 
 Created unittest cases for functions in the unit.py file to ensure code reliability.
 
-# Enhancements and Modifications:
+## Enhancements and Modifications:
 
 Added more data to the JSON file and implemented a for loop for playlist creation.
 
@@ -30,11 +30,11 @@ Removed two columns (duration_min & duration_sec) in the track table and created
 
 Created a new table, track_genres, to establish a relationship between track and genres.
 
-# Exception Handling:
+## Exception Handling:
 
 Added try-except blocks for exception handling to ensure robustness and graceful error handling.
 
-# Data Validation:
+## Data Validation:
 
 Implemented email validation for the playlist table to ensure the validity of email addresses.
 
@@ -46,7 +46,7 @@ Implemented alphabet validation for playlist_name, description, artist, and user
 
 Implemented punctuation validation for track_name and album_name.
 
-# Code Organization:
+## Code Organization:
 
 Moved validation methods to a separate file named validation.py for better code organization.
 
