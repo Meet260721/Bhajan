@@ -1,3 +1,8 @@
+
+## Project Description:
+
+Our project endeavors to develop a comprehensive and efficient database management system tailored for music playlist management. Leveraging PostgreSQL as the database engine and Python for backend scripting, we implemented a suite of features to ensure seamless data management, robust relationships, and reliable data validation.
+
 ## Database Setup:
 
 Created database and tables in PostgreSQL using pgAdmin.
