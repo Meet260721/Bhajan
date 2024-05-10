@@ -4,17 +4,17 @@ import time
 from datetime import timedelta,datetime,date
 import psycopg2
 from psycopg2 import sql
-import validation
-from db_connection import database_connection
+from validation import SpotifyValidation
+from db_connection import DatabaseConnector
 import sqlStatements
 
 try:
     # read file Songs.json from the AWS s3 bucket as file and loads data in spotify_json
     # insert your AWS Access credential
-    s3 = boto3.client('s3',aws_access_key_id = "YOUR AWS ACCESS KEY",aws_secret_access_key = "YOUR AWS SECRET ACCESS KEY")
+    s3 = boto3.client('s3',aws_access_key_id = "AKIA3FLDXYMWCVR6C6UJ",aws_secret_access_key = "PwQh6EnsKI7SzZXvl5LqOLttFWIgOaFB8ecs3vx4")
 
-    bucket_name = "YOUR BUCKET NAME" # Insert your bucket name
-    file_name = "YOUR JSON FILE NAME"# MINE WAS Songs.json
+    bucket_name = "getting-started-s3-songs" # Insert your bucket name
+    file_name = "Songs.json"# MINE WAS Songs.json
 
     response = s3.get_object(Bucket=bucket_name, Key=file_name)
     file = response['Body'].read()
@@ -34,9 +34,17 @@ def duration_time(ms):
 genre_names = []
 
  # inserting value in table if and only all details are true
-if validation.is_valid_json(spotify_json):
+if SpotifyValidation.is_valid_json(spotify_json):
     # Connection to database
-    connection, curr = database_connection()
+    db_connector = DatabaseConnector(
+        dbname="Demo",
+        user="postgres",
+        password="Meet@2712",
+        host="localhost",
+        port="5432"
+    )
+    db_connector.database_connect()
+    curr = db_connector.cursor
 
     # Create table playlist if it doesn't exist in database
     curr.execute(sql.SQL(sqlStatements.playlist_create_table_query))
@@ -138,8 +146,7 @@ else:
 #PAUSE BEFORE READING AND INSERTING NEXT DATA
 time.sleep(1)
 
-connection.commit()
+db_connector.database_commit()
 
 # Close the cursor and connection
-curr.close()
-connection.close()
+db_connector.database_disconnect()
