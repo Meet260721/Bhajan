@@ -1,4 +1,3 @@
-
 # Query for create playlist table
 playlist_create_table_query = """
                             CREATE TABLE IF NOT EXISTS playlist (playlist_id SERIAL PRIMARY KEY,
