@@ -58,7 +58,6 @@ class TestCode(unittest.TestCase):
         self.assertFalse(DataValidation.is_valid_date("2023-02-29"))
         # self.assertFalse(is_valid_date(435455565))
 
-
 # If you are running this code as a script, this block will execute the tests
 if __name__ == '__main__':
     unittest.main()

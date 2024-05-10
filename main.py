@@ -13,8 +13,8 @@ try:
     # insert your AWS Access credential
     s3 = boto3.client('s3',aws_access_key_id = "YOUR AWS ACCESS KEY",aws_secret_access_key = "YOUR AWS SECRET KEY")
 
-    bucket_name = "getting-started-s3-songs" # Insert your bucket name
-    file_name = "Songs.json"# MINE WAS Songs.json
+    bucket_name = "YOUR BUCKET NAME" # Insert your bucket name
+    file_name = "YOUR FILE NAME"# MINE WAS Songs.json
 
     response = s3.get_object(Bucket=bucket_name, Key=file_name)
     file = response['Body'].read()

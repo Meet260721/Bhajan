@@ -2,6 +2,7 @@
 from datetime import datetime, date
 from email_validator import validate_email,EmailNotValidError
 
+
 class DataValidation:
 # function for validating release_date
     def is_valid_date(input_date):

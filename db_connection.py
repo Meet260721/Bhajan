@@ -1,4 +1,5 @@
 """This file for database connection"""
+
 import psycopg2
 
 class DatabaseConnector:
