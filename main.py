@@ -8,6 +8,7 @@ from validation import SpotifyValidation
 from db_connection import DatabaseConnector
 import sqlStatements
 
+
 try:
     # read file Songs.json from the AWS s3 bucket as file and loads data in spotify_json
     # insert your AWS Access credential
