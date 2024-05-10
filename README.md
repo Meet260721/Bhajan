@@ -19,26 +19,19 @@ Made track_id,genre_is a foreign key in the track_genres table to establish a re
 
 Successfully fetched playlist_id, album_id from the playlist table, album table and displayed it in the track table. Also fetched genre_id, track_id from the genres table, tracks table and displayed it in the track_genres table.
 
-![ER Diagram for tables]([ER Diagram.jpg](https://github.com/Meet260721/Songs/blob/main/ER%20Diagram.jpg))
+![ER Diagram for tables](https://github.com/Meet260721/Songs/blob/main/ER%20Diagram.jpg)
 
-
-## Preventing Data Duplication:
+## Preventing Data Duplication and Modification:
 
 Implemented constraints and conflict resolution in the code to prevent rewriting duplicate data.
 
-Used SQL's truncate command to remove existing data before inserting new data.
+Used SQL's Drop command to delete existing table before creating table and inserting new data again.
+
+Removed two columns (duration_min & duration_sec) in the track table and created a new column, duration_time.
 
 ## Unit Testing:
 
 Created unittest cases for functions in the unit.py file to ensure code reliability.
-
-## Enhancements and Modifications:
-
-Added more data to the JSON file and implemented a for loop for playlist creation.
-
-Removed two columns (duration_min & duration_sec) in the track table and created a new column, duration_time.
-
-Created a new table, track_genres, to establish a relationship between track and genres.
 
 ## Exception Handling:
 
@@ -70,7 +63,7 @@ Started creating tables programmatically within Python code using PyCharm for be
 
 Create database in PostgreSQL with help of pgAdmin.
 
-In db_connection.py update the 
+In db_connection.py update the below details according to your database.
 
         dbname="DatabaseName",  # Insertyourdatabasename
         
@@ -82,9 +75,6 @@ In db_connection.py update the
         
         port="Portnumber"  # InsertYourportnumber
 
-according to your database details.
-
-Make sure that Songs.json file located in same folder where is main.py . 
 
 Set up an S3 bucket in AWS and upload the `Songs.json` file to the bucket.
 
@@ -95,6 +85,17 @@ pip install awscli
 
 Check Version :- 
 aws --version
+
+Create users in AWS with the help of service IAM. you can create YOUR AWS ACCESS KEY there. make sure to download your ACCESS KEY
+.csv file because you can see YOUR AWS SECRET ACCESS KEY only once while you are creating it.
+
+Update the below details according to your YOUR AWS ACCESS KEY,  YOUR AWS SECRET ACCESS KEY, YOUR BUCKET NAME and YOUR JSON FILE NAME .
+
+        s3 = boto3.client('s3',aws_access_key_id = "YOUR AWS ACCESS KEY",aws_secret_access_key = "YOUR AWS SECRET ACCESS KEY")
+
+        bucket_name = "YOUR BUCKET NAME" # Insert your bucket name
+        file_name = "YOUR JSON FILE NAME"# MINE WAS Songs.json
+
 
 Run the `main.py` script by executing `python main.py` or `python3 main.py` in your terminal.
 
