@@ -21,22 +21,17 @@ Successfully fetched playlist_id, album_id from the playlist table, album table 
 
 ![ER Diagram for tables](https://github.com/Meet260721/Songs/blob/main/ER%20Diagram.jpg)
 
-
-## Preventing Data Duplication:
+## Preventing Data Duplication and Modification:
 
 Implemented constraints and conflict resolution in the code to prevent rewriting duplicate data.
 
-Used SQL's Drop command to delete existing table before inserting new data.
+Used SQL's Drop command to delete existing table before creating table and inserting new data again.
+
+Removed two columns (duration_min & duration_sec) in the track table and created a new column, duration_time.
 
 ## Unit Testing:
 
 Created unittest cases for functions in the unit.py file to ensure code reliability.
-
-## Enhancements and Modifications:
-
-Added more data to the JSON file and implemented a for loop for playlist creation.
-
-Removed two columns (duration_min & duration_sec) in the track table and created a new column, duration_time.
 
 ## Exception Handling:
 
@@ -96,10 +91,10 @@ Create users in AWS with the help of service IAM. you can create YOUR AWS ACCESS
 
 Update the below details according to your YOUR AWS ACCESS KEY,  YOUR AWS SECRET ACCESS KEY, YOUR BUCKET NAME and YOUR JSON FILE NAME .
 
-s3 = boto3.client('s3',aws_access_key_id = "YOUR AWS ACCESS KEY",aws_secret_access_key = "YOUR AWS SECRET ACCESS KEY")
+        s3 = boto3.client('s3',aws_access_key_id = "YOUR AWS ACCESS KEY",aws_secret_access_key = "YOUR AWS SECRET ACCESS KEY")
 
-    bucket_name = "YOUR BUCKET NAME" # Insert your bucket name
-    file_name = "YOUR JSON FILE NAME"# MINE WAS Songs.json
+        bucket_name = "YOUR BUCKET NAME" # Insert your bucket name
+        file_name = "YOUR JSON FILE NAME"# MINE WAS Songs.json
 
 
 Run the `main.py` script by executing `python main.py` or `python3 main.py` in your terminal.
