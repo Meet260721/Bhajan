@@ -11,7 +11,7 @@ import sqlStatements
 try:
     # read file Songs.json from the AWS s3 bucket as file and loads data in spotify_json
     # insert your AWS Access credential
-    s3 = boto3.client('s3',aws_access_key_id = "AKIA3FLDXYMWCVR6C6UJ",aws_secret_access_key = "PwQh6EnsKI7SzZXvl5LqOLttFWIgOaFB8ecs3vx4")
+    s3 = boto3.client('s3',aws_access_key_id = "YOUR AWS ACCESS KEY",aws_secret_access_key = "YOUR AWS SECRET KEY")
 
     bucket_name = "getting-started-s3-songs" # Insert your bucket name
     file_name = "Songs.json"# MINE WAS Songs.json
@@ -37,11 +37,11 @@ genre_names = []
 if SpotifyValidation.is_valid_json(spotify_json):
     # Connection to database
     db_connector = DatabaseConnector(
-        dbname="Demo",
-        user="postgres",
-        password="Meet@2712",
-        host="localhost",
-        port="5432"
+        dbname="DatabaseName",  # Insertyourdatabasename
+        user="UserName",  # Insertyourusername
+        password="Password",  # InsertYourpassword
+        host="HostName",  # InsertYourHostName
+        port="Portnumber"  # InsertYourportnumber
     )
     db_connector.database_connect()
     curr = db_connector.cursor
