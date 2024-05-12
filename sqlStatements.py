@@ -6,7 +6,9 @@ playlist_create_table_query = """
                                 description TEXT,
                                 creator_username VARCHAR(255),
                                 creator_email VARCHAR(255),
-                                CONSTRAINT playlist_unique_constraint UNIQUE (playlist_name, creator_username))
+                                CONSTRAINT playlist_unique_constraint UNIQUE (playlist_name, creator_username));
+                                
+                            CREATE INDEX playlist_index ON playlist(playlist_name, creator_username);
 """
 
 # Query for create album table
@@ -14,7 +16,9 @@ album_create_table_query = """
                             CREATE TABLE IF NOT EXISTS album (album_id SERIAL PRIMARY KEY,
                                 name VARCHAR(255),
                                 release_date DATE,
-                                CONSTRAINT album_unique_constraint UNIQUE (name, release_date))
+                                CONSTRAINT album_unique_constraint UNIQUE (name, release_date));
+                            
+                            CREATE INDEX album_index ON album(name, release_date);
 """
 
 # Query for create tracks table
@@ -32,14 +36,18 @@ tracks_create_table_query = """
                                 explicit_content BOOLEAN,
                                 CONSTRAINT tracks_unique_constraint UNIQUE (track_name, artist),
                                 FOREIGN KEY (playlist_id) REFERENCES playlist(playlist_id),
-                                FOREIGN KEY (album_id) REFERENCES album(album_id))
+                                FOREIGN KEY (album_id) REFERENCES album(album_id));
+                                
+                            CREATE INDEX track_index ON tracks(track_name, artist);
 """
 
 # Query for create genres table
 genres_create_table_query = """
                             CREATE TABLE IF NOT EXISTS genres (genre_id SERIAL PRIMARY KEY,
                                 genre_name VARCHAR(255),
-                                CONSTRAINT genres_unique_constraint UNIQUE (genre_name))
+                                CONSTRAINT genres_unique_constraint UNIQUE (genre_name));
+                            
+                            CREATE INDEX genres_index ON genres(genre_name);
 """
 
 # Query for create track_genres table
@@ -49,7 +57,8 @@ track_genres_create_table_query = """
                                 PRIMARY KEY(track_id, genre_id),
                                 CONSTRAINT track_genres_unique_constraint UNIQUE (track_id, genre_id),
                                 FOREIGN KEY (track_id) REFERENCES tracks(track_id),
-                                FOREIGN KEY (genre_id) REFERENCES genres(genre_id))
+                                FOREIGN KEY (genre_id) REFERENCES genres(genre_id));
+                                
 """
 
 # Query for insert value in playlist table

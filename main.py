@@ -1,13 +1,11 @@
 import json
 import boto3
-import time
-from datetime import timedelta,datetime,date
+from datetime import timedelta
 import psycopg2
 from psycopg2 import sql
 from validation import SpotifyValidation
 from db_connection import DatabaseConnector
 import sqlStatements
-
 
 try:
     # read file Songs.json from the AWS s3 bucket as file and loads data in spotify_json
@@ -141,13 +139,10 @@ if SpotifyValidation.is_valid_json(spotify_json):
                 ))
             except psycopg2.Error as e:
                 print("Error occur while inserting data in genres table", e)
+
+        db_connector.database_commit()
 else:
     print("validation failed.")
-
-#PAUSE BEFORE READING AND INSERTING NEXT DATA
-time.sleep(1)
-
-db_connector.database_commit()
 
 # Close the cursor and connection
 db_connector.database_disconnect()
