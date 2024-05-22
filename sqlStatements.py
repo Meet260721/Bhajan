@@ -1,4 +1,28 @@
 
+# query for check if table is exist or not
+table_exist = """
+                SELECT EXISTS (
+                SELECT 1 FROM information_schema.tables WHERE table_name = 'playlist'
+                UNION ALL
+                SELECT 1 FROM information_schema.tables WHERE table_name = 'tracks'
+                UNION ALL
+                SELECT 1 FROM information_schema.tables WHERE table_name = 'genres'
+                UNION ALL
+                SELECT 1 FROM information_schema.tables WHERE table_name = 'album'
+                UNION ALL
+                SELECT 1 FROM information_schema.tables WHERE table_name = 'track_genres'
+            );
+"""
+
+#query for drop all tables
+drop_all_tables = """
+                    DROP TABLE IF EXISTS album CASCADE;
+                    DROP TABLE IF EXISTS playlist CASCADE;
+                    DROP TABLE IF EXISTS tracks CASCADE;
+                    DROP TABLE IF EXISTS genres CASCADE;
+                    DROP TABLE IF EXISTS track_genres CASCADE;
+"""
+
 # Query for create playlist table
 playlist_create_table_query = """
                             CREATE TABLE IF NOT EXISTS playlist (playlist_id SERIAL PRIMARY KEY,

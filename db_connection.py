@@ -14,11 +14,11 @@ class DatabaseConnector:
     def database_connect(self):
         try:
             self.connection = psycopg2.connect(
-                dbname=self.dbname,  # Insertyourdatabasename
-                user=self.user,  # Insertyourusername
-                password =self.password,  # InsertYourpassword
-                host = self.host,  # InsertYourHostName
-                port = self.port  # InsertYourportnumber
+                dbname=self.dbname,
+                user=self.user,
+                password =self.password,
+                host = self.host,
+                port = self.port
 
             )
             self.cursor = self.connection.cursor()
@@ -33,5 +33,3 @@ class DatabaseConnector:
         if self.connection:
             self.cursor.close()
             self.connection.close()
-
-

@@ -7,20 +7,22 @@ from validation import SpotifyValidation
 from db_connection import DatabaseConnector
 import sqlStatements
 
-try:
-    # read file Songs.json from the AWS s3 bucket as file and loads data in spotify_json
-    # insert your AWS Access credential
-    s3 = boto3.client('s3',aws_access_key_id = "YOUR AWS ACCESS KEY",aws_secret_access_key = "YOUR AWS SECRET KEY")
-
-    bucket_name = "YOUR BUCKET NAME" # Insert your bucket name
-    file_name = "YOUR FILE NAME"# MINE WAS Songs.json
-
-    response = s3.get_object(Bucket=bucket_name, Key=file_name)
-    file = response['Body'].read()
-    spotify_json = json.loads(file)
-except FileNotFoundError:
-    print("file Songs.json is not found.")
-    exit()
+with open("Songs.json") as file:
+    spotify_json = json.load(file)
+# try:
+#     # read file Songs.json from the AWS s3 bucket as file and loads data in spotify_json
+#     # insert your AWS Access credential
+#     s3 = boto3.client('s3',aws_access_key_id = "YOUR AWS ACCESS KEY",aws_secret_access_key = "YOUR AWS SECRET KEY")
+#
+#     bucket_name = "YOUR BUCKET NAME" # Insert your bucket name
+#     file_name = "YOUR FILE NAME"# MINE WAS Songs.json
+#
+#     response = s3.get_object(Bucket=bucket_name, Key=file_name)
+#     file = response['Body'].read()
+#     spotify_json = json.loads(file)
+# except FileNotFoundError:
+#     print("file Songs.json is not found.")
+#     exit()
 
 # create function for convert duration time from millisecond to minutes
 def duration_time(ms):
@@ -32,18 +34,33 @@ def duration_time(ms):
 #creating empty list
 genre_names = []
 
+#AWS redshift database information
+
+RS_HOST = " YOUR AWS REDSHIFT HOST NAME"  # Insert Your AWS Redshift Host Name
+RS_DATABASE = "YOUR AWS REDSHIFT DATABASE NAME" # Insert your AWS Redshift database name
+RS_USER = "YOUR AWS REDSHIFT USER NAME" # Insert your AWS Redshift username
+RS_PORT = "YOUR AWS REDSHIFT PORT NAME" # Insert Your AWS Redshift port number
+RS_PASSWORD = "YOUR AWS REDSHIFT PASSWORD " # Insert Your AWS Redshift password
+
  # inserting value in table if and only all details are true
 if SpotifyValidation.is_valid_json(spotify_json):
     # Connection to database
     db_connector = DatabaseConnector(
-        dbname="DatabaseName",  # Insertyourdatabasename
-        user="UserName",  # Insertyourusername
-        password="Password",  # InsertYourpassword
-        host="HostName",  # InsertYourHostName
-        port="Portnumber"  # InsertYourportnumber
+        dbname=RS_DATABASE,
+        user=RS_USER,
+        password=RS_PASSWORD,
+        host=RS_HOST,
+        port=RS_PORT
     )
     db_connector.database_connect()
     curr = db_connector.cursor
+
+    #If tables are exists in the database then it drop it
+    curr.execute(sql.SQL(sqlStatements.table_exist))
+    table_exist = curr.fetchone()[0]
+    if table_exist:
+        curr.execute(sql.SQL(sqlStatements.drop_all_tables))
+        print("drop table")
 
     # Create table playlist if it doesn't exist in database
     curr.execute(sql.SQL(sqlStatements.playlist_create_table_query))
