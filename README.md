@@ -176,17 +176,21 @@ Adjust the formatting to ensure a clean and professional appearance.
 
 #### Example Dashboard Layout
 
-**Top Section : Playlist Overview**
+**Top Left Section : Playlist Overview**
 
 Show the number of tracks per playlist, color-coded by creator username.
 
-**Middle Section: Album Popularity**
+**Top Right Section: Track Genre Distribution**
+
+Display the distribution of tracks across different genres.
+
+**Bottom Section: Album Popularity**
 
 Visualize the total popularity of each album, with a color gradient representing the release year.
 
-**Bottom Section: Track Genre Distribution**
+#### Dashboard Created in tableu
 
-Display the distribution of tracks across different genres.
+![Dashboard in Tableu](https://github.com/Meet260721/Songs/blob/main/ER%20Diagram.jpg)
 
 ## Steps to Run
 
