@@ -29,6 +29,12 @@ Used SQL's Drop command to delete existing table before creating table and inser
 
 Removed two columns (duration_min & duration_sec) in the track table and created a new column, duration_time.
 
+#### Indexing in SQL
+
+Create index which improve the performance of queries that involve searching for specific tracks by name or artist, as well as queries that involve sorting or grouping by track name and artist.
+
+However, it's important to consider the overall database design and usage patterns before creating indexes, as they can consume additional storage space and may impact the performance of write operations (such as inserts, updates, and deletes) due to the overhead of maintaining the index.
+
 ## Unit Testing:
 
 Created unittest cases for functions in the unit.py file to ensure code reliability.
@@ -81,10 +87,8 @@ Set up an S3 bucket in AWS and upload the `Songs.json` file to the bucket.
 Configure the AWS credentials in your environment or directly in the code using AWS CLI or SDK.
 
 Install AWSCLI :- 
-pip install awscli
 
-Check Version :- 
-aws --version
+        pip install awscli
 
 Create users in AWS with the help of service IAM. you can create YOUR AWS ACCESS KEY there. make sure to download your ACCESS KEY
 .csv file because you can see YOUR AWS SECRET ACCESS KEY only once while you are creating it.
@@ -97,5 +101,6 @@ Update the below details according to your YOUR AWS ACCESS KEY,  YOUR AWS SECRET
         file_name = "YOUR JSON FILE NAME"# MINE WAS Songs.json
 
 
-Run the `main.py` script by executing `python main.py` or `python3 main.py` in your terminal.
+Run the `main.py` script by executing below command in terminal.
 
+        python3 main.py        
