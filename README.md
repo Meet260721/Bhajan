@@ -210,7 +210,7 @@ In `main.py` update the below details according to your database.
         
         port="Portnumber"  # InsertYourportnumber
 
-##### 2] If you are creating Database in AWS Redsgift service.
+##### 2] If you are creating Database in AWS Redshift service.
 
 Create cluster and database in AWS Redshift service.
 
