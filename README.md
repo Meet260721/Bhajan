@@ -188,9 +188,9 @@ Display the distribution of tracks across different genres.
 
 Visualize the total popularity of each album, with a color gradient representing the release year.
 
-#### Dashboard Created in tableu
+#### Dashboard Created in tableau
 
-![Dashboard in Tableu](https://github.com/Meet260721/Songs/blob/main/Tableu%20Dashboard.jpeg) 
+![Dashboard in Tableau](https://github.com/Meet260721/Songs/blob/main/Tableu%20Dashboard.jpeg) 
 
 ## Steps to Run
 
