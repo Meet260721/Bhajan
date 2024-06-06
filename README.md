@@ -190,7 +190,7 @@ Visualize the total popularity of each album, with a color gradient representing
 
 #### Dashboard Created in tableau
 
-![Dashboard in Tableau](https://github.com/Meet260721/Songs/blob/main/Tableu%20Dashboard.jpeg) 
+![Dashboard in Tableau](https://github.com/Meet260721/Songs/blob/main/Tableau%20Dashboard.jpeg) 
 
 ## Steps to Run
 
